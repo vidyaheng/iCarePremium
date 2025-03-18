@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณค่าเบี้ยประกัน</title>
+</head>
+<body>
+    <h2>คำนวณค่าเบี้ยประกัน</h2>
+    <form id="insuranceForm">
+        <label>เพศ:</label>
+        <select id="gender">
+            <option value="male">ชาย</option>
+            <option value="female">หญิง</option>
+        </select>
+        <br>
+        <label>อายุ:</label>
+        <input type="number" id="age" min="1" max="100">
+        <br>
+        <label>แผนประกัน:</label>
+        <select id="plan">
+            <option value="500000">500,000</option>
+            <option value="1000000">1,000,000</option>
+            <option value="1500000">1,500,000</option>
+            <option value="2000000">2,000,000</option>
+            <option value="2500000">2,500,000</option>
+            <option value="3000000">3,000,000</option>
+            <option value="4000000">4,000,000</option>
+            <option value="5000000">5,000,000</option>
+        </select>
+        <br>
+        <button type="button" onclick="calculatePremium()">คำนวณ</button>
+    </form>
+    <h3>ค่าเบี้ยประกัน: <span id="premiumResult">-</span> บาท</h3>
+
+    <script>
+        async function loadRates() {
+            try {
+                const response = await fetch("rates.json");
+                if (!response.ok) throw new Error("ไม่สามารถโหลดข้อมูล JSON");
+                return await response.json();
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการโหลดข้อมูล:", error);
+                return null;
+            }
+        }
+
+        async function calculatePremium() {
+            let gender = document.getElementById("gender").value;
+            let age = document.getElementById("age").value;
+            let plan = document.getElementById("plan").value;
+
+            if (!age || age < 1 || age > 100) {
+                alert("กรุณากรอกอายุให้ถูกต้อง");
+                return;
+            }
+
+            let data = await loadRates();
+            if (!data) {
+                alert("ไม่สามารถโหลดข้อมูลเบี้ยประกันได้");
+                return;
+            }
+
+            let ciRate = data.criticalIllnessRates[gender]?.[age] || 0;
+            let ip85Rate = data.ip85Rates[age] || 0;
+            let ciPremium = (ciRate * plan) / 1000;
+            let totalPremium = ciPremium + ip85Rate;
+            
+            document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
+        }
+    </script>
+</body>
+</html>
