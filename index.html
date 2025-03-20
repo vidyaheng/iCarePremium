@@ -28,20 +28,20 @@
             justify-content: center;
             gap: 10px;
         }
-        .gender-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 50px;
-            height: 30px;
-            padding: 5px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
-            transform-origin: center; /* ให้ขยายจากกึ่งกลาง */
-        }
+.gender-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    height: 30px;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+    transform-origin: center;
+}
         .gender-btn img {
             width: 20px;
             height: 20px;
@@ -100,17 +100,14 @@
     <h2>คำนวณเบี้ยประกัน iCare</h2>
     <form id="insuranceForm">
         <div class="gender-group">
-            <label for="gender">เพศ:</label>
-            <div id="maleBtn" class="gender-btn male selected" onclick="selectGender('male')">
-                <img src="https://cdn-icons-png.flaticon.com/512/201/201634.png" alt="ชาย">
-                ชาย
-            </div>
-            <div id="femaleBtn" class="gender-btn female unselected" onclick="selectGender('female')">
-                <img src="https://cdn-icons-png.flaticon.com/512/201/201634.png" alt="หญิง">
-                หญิง
-            </div>
-        </div>
-        <input type="hidden" id="gender" value="male">
+    <div class="gender-btn male" onclick="selectGender('male')">
+        ♂ ชาย
+    </div>
+    <div class="gender-btn female" onclick="selectGender('female')">
+        ♀ หญิง
+    </div>
+</div>
+<input type="hidden" id="gender" name="gender">
         <div class="form-group">
             <label>อายุ:</label>
             <input type="number" id="age" min="1" max="100">
@@ -201,21 +198,10 @@
     }
   };
         function selectGender(gender) {
-            document.getElementById("gender").value = gender;
-            if (gender === "male") {
-                document.getElementById("maleBtn").classList.add("selected");
-                document.getElementById("maleBtn").classList.remove("unselected");
-                document.getElementById("femaleBtn").classList.add("unselected");
-                document.getElementById("femaleBtn").classList.remove("selected");
-            } else {
-                document.getElementById("femaleBtn").classList.add("selected");
-                document.getElementById("femaleBtn").classList.remove("unselected");
-                document.getElementById("maleBtn").classList.add("unselected");
-                document.getElementById("maleBtn").classList.remove("selected");
-            }
-        }
-
-
+    document.getElementById("gender").value = gender;
+    document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("selected"));
+    document.querySelector(`.${gender}`).classList.add("selected");
+}
         function calculatePremium() {
             let gender = document.getElementById("gender").value;
             let age = document.getElementById("age").value;
