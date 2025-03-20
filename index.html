@@ -36,6 +36,7 @@
         .gender-buttons {
             display: flex;
             justify-content: space-between;
+            gap: 10px;
         }
         .gender-button {
             flex: 1;
@@ -99,8 +100,8 @@
         <div class="form-group">
             <label>เพศ:</label>
             <div class="gender-buttons">
-                <button type="button" class="gender-button male selected" onclick="selectGender('male')">♂ ชาย</button>
-                <button type="button" class="gender-button female" onclick="selectGender('female')">♀ หญิง</button>
+                <button type="button" class="gender-button male" id="maleButton">♂ ชาย</button>
+                <button type="button" class="gender-button female" id="femaleButton">♀ หญิง</button>
             </div>
             <input type="hidden" id="gender" value="male">
         </div>
@@ -195,12 +196,20 @@
     }
   };
 <script>
+        document.getElementById("maleButton").addEventListener("click", function() {
+            selectGender("male");
+        });
+
+        document.getElementById("femaleButton").addEventListener("click", function() {
+            selectGender("female");
+        });
+
         function selectGender(gender) {
             document.getElementById("gender").value = gender;
             document.querySelectorAll(".gender-button").forEach(button => {
                 button.classList.remove("selected");
             });
-            document.querySelector(".gender-button." + gender).classList.add("selected");
+            document.getElementById(gender + "Button").classList.add("selected");
         }
 
         function calculatePremium() {
@@ -213,19 +222,11 @@
                 return;
             }
 
-            let baseRate = 1.5;
-            if (gender === "female") {
-                baseRate = 1.4; 
-            }
-            
+            let baseRate = gender === "female" ? 1.4 : 1.5;
             let ciPremium = (baseRate * plan) / 1000;
             let totalPremium = ciPremium;
 
-            if (!isNaN(totalPremium)) {
-                document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
-            } else {
-                document.getElementById("premiumResult").innerText = "-";
-            }
+            document.getElementById("premiumResult").innerText = isNaN(totalPremium) ? "-" : totalPremium.toLocaleString();
         }
     </script>
 
