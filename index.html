@@ -1,4 +1,3 @@
-จาก code นี้ ถ้าจะแก้ ให้ เลือก เพศ ชายหญิง แยก เป็น ปุ่ม ชาย กับ ปุ่มหญิง ใส่ icon เครื่องหมายเพศด้วย แก้ให้หน่อย 
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -24,6 +23,41 @@
             flex-direction: column;
             gap: 10px;
         }
+        .gender-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .gender-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+        .gender-btn img {
+            width: 24px;
+            height: 24px;
+            margin-right: 5px;
+        }
+        .male {
+            background: #add8e6;
+        }
+        .female {
+            background: #ffb6c1;
+        }
+        .selected {
+            transform: scale(1.1);
+            border: 3px solid black;
+        }
+        .unselected {
+            opacity: 0.5;
+        }
         .form-group {
             display: flex;
             justify-content: space-between;
@@ -48,7 +82,7 @@
             cursor: pointer;
             font-size: 1.2em;
             width: 50%;
-            align-self: center; /* ทำให้ปุ่มอยู่ตรงกลาง */
+            align-self: center;
         }
         button:hover {
             background-color: darkgreen;
@@ -61,16 +95,19 @@
     </style>
 </head>
 <body>
-
     <h2>คำนวณเบี้ยประกัน iCare</h2>
     <form id="insuranceForm">
-        <div class="form-group">
-            <label>เพศ:</label>
-            <select id="gender">
-                <option value="male">ชาย</option>
-                <option value="female">หญิง</option>
-            </select>
+        <div class="gender-group">
+            <div id="maleBtn" class="gender-btn male selected" onclick="selectGender('male')">
+                <img src="https://cdn-icons-png.flaticon.com/512/201/201634.png" alt="ชาย">
+                ชาย
+            </div>
+            <div id="femaleBtn" class="gender-btn female unselected" onclick="selectGender('female')">
+                <img src="https://cdn-icons-png.flaticon.com/512/201/201634.png" alt="หญิง">
+                หญิง
+            </div>
         </div>
+        <input type="hidden" id="gender" value="male">
         <div class="form-group">
             <label>อายุ:</label>
             <input type="number" id="age" min="1" max="100">
@@ -90,7 +127,6 @@
         </div>
         <button type="button" onclick="calculatePremium()">คำนวณ</button>
     </form>
-
     <h3>ค่าเบี้ยประกัน: <span id="premiumResult">-</span> บาท</h3>
 
     <script>
@@ -160,6 +196,21 @@
       }
     }
   };
+        function selectGender(gender) {
+            document.getElementById("gender").value = gender;
+            if (gender === "male") {
+                document.getElementById("maleBtn").classList.add("selected");
+                document.getElementById("maleBtn").classList.remove("unselected");
+                document.getElementById("femaleBtn").classList.add("unselected");
+                document.getElementById("femaleBtn").classList.remove("selected");
+            } else {
+                document.getElementById("femaleBtn").classList.add("selected");
+                document.getElementById("femaleBtn").classList.remove("unselected");
+                document.getElementById("maleBtn").classList.add("unselected");
+                document.getElementById("maleBtn").classList.remove("selected");
+            }
+        }
+
 
         function calculatePremium() {
             let gender = document.getElementById("gender").value;
