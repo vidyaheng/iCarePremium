@@ -100,7 +100,7 @@
         <div class="form-group">
             <label>เพศ:</label>
             <div class="gender-buttons">
-                <button type="button" class="gender-button male" id="maleButton">♂ ชาย</button>
+                <button type="button" class="gender-button male selected" id="maleButton">♂ ชาย</button>
                 <button type="button" class="gender-button female" id="femaleButton">♀ หญิง</button>
             </div>
             <input type="hidden" id="gender" value="male">
@@ -122,7 +122,7 @@
                 <option value="5000000">5,000,000</option>
             </select>
         </div>
-        <button type="button" onclick="calculatePremium()">คำนวณ</button>
+        <button type="button" onclick="calculatePremium()" disabled>คำนวณ</button>
     </form>
 
     <h3>ค่าเบี้ยประกัน: <span id="premiumResult">-</span> บาท</h3>
@@ -195,7 +195,10 @@
       }
     }
   };
-<script>
+          window.onload = function () {
+            selectGender("male"); // ตั้งค่าเริ่มต้นให้กับปุ่ม "ชาย"
+        };
+
         document.getElementById("maleButton").addEventListener("click", function() {
             selectGender("male");
         });
@@ -212,10 +215,14 @@
             document.getElementById(gender + "Button").classList.add("selected");
         }
 
+        document.getElementById("age").addEventListener("input", function () {
+            document.querySelector("button[onclick='calculatePremium()']").disabled = !this.value;
+        });
+
         function calculatePremium() {
             let gender = document.getElementById("gender").value;
-            let age = document.getElementById("age").value;
-            let plan = document.getElementById("plan").value;
+            let age = parseInt(document.getElementById("age").value);
+            let plan = parseInt(document.getElementById("plan").value);
 
             if (!age || age < 1 || age > 100) {
                 alert("กรุณากรอกอายุให้ถูกต้อง");
@@ -226,10 +233,10 @@
             let ciPremium = (baseRate * plan) / 1000;
             let totalPremium = ciPremium;
 
-            document.getElementById("premiumResult").innerText = isNaN(totalPremium) ? "-" : totalPremium.toLocaleString();
+            document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
         }
     </script>
 
 </body>
-</html>
+</html
 
