@@ -108,26 +108,47 @@
             </div>
             <input type="hidden" id="gender" value="male">
         </div>
-        <div class="form-group" style="display: flex; align-items: center;">
-            <label style="width: 80px;">อายุ:</label>
-            <div style="display: flex; align-items: center; gap: 5px">
-                <input type="number" id="age" min="1" max="100" style="width: 70px;">
-                <span>ปี</span>
-            </div>
-        </div>
-        <div class="form-group" style="display: flex; align-items: center;">
-            <label style="width: 80px;">แผนประกัน:</label>
-            <select id="plan" style="width: 70px;">
-                <option value="500000">500,000</option>
-                <option value="1000000">1,000,000</option>
-                <option value="1500000">1,500,000</option>
-                <option value="2000000">2,000,000</option>
-                <option value="2500000">2,500,000</option>
-                <option value="3000000">3,000,000</option>
-                <option value="4000000">4,000,000</option>
-                <option value="5000000">5,000,000</option>
-            </select>
-        </div>
+        <!-- ฟอร์มอายุ และ แผนประกัน -->
+<div class="form-group" style="display: flex; align-items: center;">
+    <label style="width: 80px;">อายุ:</label>
+    <div style="display: flex; align-items: center; gap: 5px">
+        <input type="number" id="age" min="1" max="100" style="width: 70px;">
+        <span>ปี</span>
+    </div>
+</div>
+<div class="form-group" style="display: flex; align-items: center;">
+    <label style="width: 80px;">แผนประกัน:</label>
+    <select id="plan">
+        <option value="500000">500,000</option>
+        <option value="1000000">1,000,000</option>
+        <option value="1500000">1,500,000</option>
+        <option value="2000000">2,000,000</option>
+        <option value="2500000">2,500,000</option>
+        <option value="3000000">3,000,000</option>
+        <option value="4000000">4,000,000</option>
+        <option value="5000000">5,000,000</option>
+    </select>
+</div>
+
+<!-- ช่องเลือกเพศ (อยู่คนละบรรทัด) -->
+<div style="margin-top: 10px; display: flex; align-items: center;">
+    <label style="width: 80px;">เพศ:</label>
+    <div style="display: flex; gap: 15px;">
+        <!-- ตัวเลือก "ชาย" -->
+        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="radio" name="gender" value="male" style="display: none;">
+            <span style="font-size: 28px;">♂️</span> <!-- ไอคอนใหญ่ขึ้น -->
+            <span style="font-size: 16px;">ชาย</span>
+        </label>
+        
+        <!-- ตัวเลือก "หญิง" -->
+        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+            <input type="radio" name="gender" value="female" style="display: none;">
+            <span style="font-size: 28px;">♀️</span> <!-- ไอคอนใหญ่ขึ้น -->
+            <span style="font-size: 16px;">หญิง</span>
+        </label>
+    </div>
+</div>
         <button type="button" onclick="calculatePremium()" disabled>คำนวณ</button>
     </form>
 
