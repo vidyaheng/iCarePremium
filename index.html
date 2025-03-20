@@ -125,34 +125,7 @@
 
     <h3>ค่าเบี้ยประกัน: <span id="premiumResult">-</span> บาท</h3>
 
-    <script>
-        function selectGender(gender) {
-            document.getElementById("gender").value = gender;
-            document.querySelectorAll(".gender-button").forEach(button => {
-                button.classList.remove("selected");
-            });
-            document.querySelector(".gender-button." + gender).classList.add("selected");
-        }
-
-        function calculatePremium() {
-            let gender = document.getElementById("gender").value;
-            let age = document.getElementById("age").value;
-            let plan = document.getElementById("plan").value;
-
-            if (!age || age < 1 || age > 100) {
-                alert("กรุณากรอกอายุให้ถูกต้อง");
-                return;
-            }
-
-            let ciPremium = (1.5 * plan) / 1000;
-            let totalPremium = ciPremium;
-
-            if (!isNaN(totalPremium)) {
-                document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
-            } else {
-                document.getElementById("premiumResult").innerText = "-";
-            }
-        }
+    
     <script>
         const rates = {
     "criticalIllnessRates": {
@@ -220,6 +193,14 @@
       }
     }
   };
+<script>
+        function selectGender(gender) {
+            document.getElementById("gender").value = gender;
+            document.querySelectorAll(".gender-button").forEach(button => {
+                button.classList.remove("selected");
+            });
+            document.querySelector(".gender-button." + gender).classList.add("selected");
+        }
 
         function calculatePremium() {
             let gender = document.getElementById("gender").value;
@@ -231,12 +212,14 @@
                 return;
             }
 
-            let ciRate = rates.criticalIllnessRates[gender]?.[age] || 0;
-            let ip85Rate = rates.ip85Rates[gender]?.[age] || 0;
-            let ciPremium = (ciRate * plan) / 1000;
-            let totalPremium = ciPremium + ip85Rate;
+            let ciPremium = (1.5 * plan) / 1000;
+            let totalPremium = ciPremium;
 
-            document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
+            if (!isNaN(totalPremium)) {
+                document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
+            } else {
+                document.getElementById("premiumResult").innerText = "-";
+            }
         }
     </script>
 
