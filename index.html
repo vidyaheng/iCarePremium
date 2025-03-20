@@ -219,22 +219,23 @@
             document.querySelector("button[onclick='calculatePremium()']").disabled = !this.value;
         });
 
-        function calculatePremium() {
-            let gender = document.getElementById("gender").value;
-            let age = parseInt(document.getElementById("age").value);
-            let plan = parseInt(document.getElementById("plan").value);
+           function calculatePremium() {
+        let gender = document.getElementById("gender").value;
+        let age = parseInt(document.getElementById("age").value);
+        let plan = parseInt(document.getElementById("plan").value);
 
-            if (!age || age < 1 || age > 100) {
-                alert("กรุณากรอกอายุให้ถูกต้อง");
-                return;
-            }
-
-            let baseRate = gender === "female" ? 1.4 : 1.5;
-            let ciPremium = (baseRate * plan) / 1000;
-            let totalPremium = ciPremium;
-
-            document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
+        if (!age || age < 0 || age > 100) {
+            alert("กรุณากรอกอายุให้ถูกต้อง");
+            return;
         }
+
+        let criticalIllnessRate = rates.criticalIllnessRates[gender][age] || 0;
+        let ip85Rate = rates.ip85Rates[gender][age] || 0;
+
+        let totalPremium = (criticalIllnessRate * plan / 1000) + ip85Rate;
+
+        document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
+    }
     </script>
 
 </body>
