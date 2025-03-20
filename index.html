@@ -45,11 +45,11 @@
             text-align: center;
         }
         .gender-icon {
-            font-size: 2.5em; /* ขยายขนาดไอคอน */
+            font-size: 1.5em; /* ขยายขนาดไอคอน */
             font-weight: bold; /* ทำให้หนาขึ้น */
         }
         .gender-text {
-            font-size: 1.2em;
+            font-size: 1em;
             margin-top: 5px;
         }
 
@@ -116,7 +116,7 @@
                 <span class="gender-text">หญิง</span>
             </div>
         </div>
-<input type="hidden" id="gender" name="gender">
+<input type="hidden" id="gender" name="gender" value="male">
         <div class="form-group">
             <label>อายุ:</label>
             <input type="number" id="age" min="1" max="100">
@@ -207,10 +207,10 @@
     }
   };
         function selectGender(gender) {
-    document.getElementById("gender").value = gender;
-    document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("selected"));
-    document.querySelector(`.${gender}`).classList.add("selected");
-}
+            document.getElementById("gender").value = gender;
+            document.querySelectorAll(".gender-btn").forEach(btn => btn.classList.remove("selected"));
+            document.querySelector(`.${gender}`).classList.add("selected");
+        }
         function calculatePremium() {
             let gender = document.getElementById("gender").value;
             let age = document.getElementById("age").value;
@@ -228,6 +228,9 @@
 
             document.getElementById("premiumResult").innerText = totalPremium.toLocaleString();
         }
+        window.onload = function() {
+            selectGender('male');
+        };
     </script>
 
 </body>
